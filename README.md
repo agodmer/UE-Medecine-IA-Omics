@@ -1,6 +1,12 @@
 # UE-medecine-Omics
 
-Data | Matin | Après-midi
+## Présentation de l'UE
+
+## Intervenants 
+
+## Programme
+
+Data | Matin | Après-midi 
  ---: | :---: | :--- 
 22/04/2024| Cellule 1.2 |Visite des laboratoires/ Sciences omiques (G. Bachelot, A. Godmer) / Initation à R (G. Bachelot, A. Godmer) / Statistiques et méthodes non supervisées (G. Bachelot, A. Godmer)
 23/04/2024| Cellule 2.2 | Initiation à Python (G. Bachelot, A. Godmer) / Méthodes supervisées (G. Bachelot, A. Godmer)
@@ -12,3 +18,4 @@ Data | Matin | Après-midi
 02/05/2024| Cellule 2.2 | Travail personnel
 03/05/2024| Cellule 2.2 | Evaluation : QCM/CROQ et présentation ppt des résultats
 
+## Cours
