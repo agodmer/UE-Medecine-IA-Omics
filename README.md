@@ -19,3 +19,5 @@ Data | Matin | Après-midi
 03/05/2024| Cellule 2.2 | Evaluation : QCM/CROQ et présentation ppt des résultats
 
 ## Cours
+
+[Méthodes non supervisées](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/cours_PCA.pdf)
