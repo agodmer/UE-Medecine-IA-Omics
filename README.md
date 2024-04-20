@@ -1,6 +1,14 @@
-# UE-medecine-Omics
+# UE médecine à l'heure de l'IA et des "Omiques"
+
+<div style="text-align: center;width: 100%;"">
+  <img src="Images/1200px-Logo_Sorbonne_Université.png" width="200" height="120" style="margin-right: 20px; display: inline-block;">
+  <img src="Images/scai_logo.jfif" width="150" height="150" style="display: inline-block;">
+</div>
+
 
 ## Présentation de l'UE
+
+L'évolution rapide des technologies numériques, couplée à une augmentation exponentielle du volume de données hétérogènes (Big Data), notamment dans le domaine de la santé, soulève un défi majeur. Il est devenu impératif de préparer les futurs professionnels de santé à maîtriser ces outils et à comprendre leurs enjeux. En effet, les technologies numériques, incluant l'intelligence artificielle (IA), s'apprêtent à révolutionner divers secteurs en médecine. 
 
 ## Intervenants 
 
