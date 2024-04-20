@@ -1,34 +1,52 @@
 ---
-title: "Tutorial-ML-diabete"
+title: "TP Machine Learning et R"
+author: "Alexandre Godmer ; Guillaume Bachelot"
 output: html_document
-date: "2024-04-19"
+date: '`r Sys.Date()`'
 ---
-#https://rpubs.com/thanrajks/med-ana
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Ce document vise à fournir des instructions détaillées pour l'implémentation et l'optimisation de différents modèles de machine learning en R. Nous couvrirons des méthodes variées, des régressions logistiques aux réseaux de neurones, et explorerons comment ajuster leurs hyperparamètres pour améliorer la performance des modèles.
+Ce document vise à fournir des instructions pour l'implémentation et l'optimisation de différents modèles de machine learning en R. Nous couvrirons des méthodes variées, des régressions logistiques aux réseaux de neurones, et explorerons comment ajuster leurs hyperparamètres pour améliorer la performance des modèles.
 
 ## 1. Importer les données
 
 - Chargement des librairies
+
 ```{r}
-library(tidyverse) #Required for analysis, visualization
-library(plotly) # Required for interactive plotting of graphs
-library(ggsci) #Themes package for the plots
+install_if_missing <- function(packages) {
+  for (package in packages) {
+    if (!require(package, character.only = TRUE)) {
+      install.packages(package, dependencies = TRUE)
+      library(package, character.only = TRUE)
+    }
+  }
+}
+
+# List of packages to be checked and potentially installed
+packages_to_install <- c("tidyverse", "plotly", "ggsci", "caret", "rpart", "FactoMineR","factoextra", "randomForest", "e1071") 
+
+# Call the function with the list of packages
+install_if_missing(packages_to_install)
+```
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(ggsci)
 library(caret)
-library(naivebayes)
 ```
 
 - Import des données avec un fichier au format `csv`
 ```{r}
-diab <- read_csv("C:/Users/alexa/Downloads/diabetes.csv")
+diab <- read_csv("")
 ```
 
 ## 1. Visualiser les données
 
-- méthode simple
+- méthodes simples
 ```{r}
 head(diab) # Elements of first few rows
 ```
@@ -42,7 +60,7 @@ colnames(diab) #Names of Columns which are the names of predictors and outcome v
 ```
 
 ```{r}
-str(diab) # Structure of the dataset
+str(diab) #Structure of the dataset
 ```
 
 ```{r}
@@ -50,28 +68,50 @@ summary(diab)
 ```
 
 ```{r}
-#check missing values
-sum(is.na(diab))
+sum(is.na(diab))#check missing values
 ```
 
 
 ```{r}
-diab$Outcome<-factor(diab$Outcome)
-table(diab$Outcome)
+diab$Outcome<-factor(diab$Outcome) #transformer la "target" en facteur
+table(diab$Outcome)# compter le nombre de données
 ```
 
 
 ```{r}
+# Exemple de graphique
 p1<-ggplot(diab,aes(x=Age,y=Pregnancies,col=Outcome))+geom_point()+geom_smooth(method="loess", se=T)+facet_grid(.~Outcome)
 p1
 ```
 
 
-# 2.Méthodes non supervisées
+# 2. Méthodes non supervisées
 
-- PCA
+- PCA : 
 
-# Méthodes supervisées
+**Exercice:** en suivant le [tutoriel](http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/), réaliser et interpréter une PCA à l'aide du code suivant :
+
+```{r}
+# install.packages(c("FactoMineR", "factoextra"))
+library("FactoMineR")
+library("factoextra")
+```
+```{r}
+diab.pca <- PCA(diab[,-9], graph = TRUE)
+```
+
+```{r}
+fviz_pca_ind(diab.pca,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = diab$Outcome, # color by groups
+             palette = c("#00AFBB", "#FC4E07"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+             )
+```
+- **Quelles sont vos conclusions ?**
+
+# 3. Méthodes supervisées
 
 ```{r}
 set.seed(2) #sert à fixer le graine du tirage aléatoire
@@ -84,7 +124,7 @@ testing <- diab[-training.idx,] # creation du jeu de données "test"
 ```
 
 
-## Regression logistique 
+## 3.1 Regression logistique 
 
 La régression est probablement l’un des algorithmes les plus connus. L’objectif de la régression est de décrire les relations explicatives entre une variable à expliquer et une seule (régression simple) ou plusieurs variables (régression multiple). La variable à expliquer ou prédire peut-être quantitative (régression linéaire) ou qualitative (régression logistique) [31]. Il s’agit donc de prédire une valeur Y à l’aide d’une ou plusieurs variables X (X1, X2, X3, …). Par exemple, dans le cadre de la résolution d’un problème de classification à l’aide d’une régression logistique simple (prédiction d’une valeur binaire (oui/non)), la fonction logistique est une fonction sigmoïde (courbe en S). Cette fonction permet d’obtenir des valeurs de sortie entre 0 et 1. Ainsi, en appliquant un seuil de décision à 0,5, les prédictions peuvent être réparties entre les deux catégories (> 0,5 ou < 0,5).
 
@@ -99,7 +139,8 @@ pred <- predict(logit.fit,newdata=testing)
 mat <- confusionMatrix(data=pred,reference=testing$Outcome, positive = "1")
 mat
 ```
-## Arbres de décision
+
+## 3.2 Arbres de décision
 
 Les arbres de décision classifient les données en apprenant des décisions simples déduites des caractéristiques
 
@@ -113,7 +154,8 @@ fit.tree <- rpart(Outcome ~ ., data = training, method = "class")
 tree.pred <- predict(fit.tree, newdata = testing, type = "class")
 confusionMatrix(tree.pred, testing$Outcome)
 ```
-## Forêts aléatoires
+
+## 3.3 Forêts aléatoires (Random Forests)
 
 Les forêts aléatoires utilisent un ensemble de techniques pour améliorer la robustesse des arbres de décision. les arbres de décision sont des algorithmes polyvalents capables de résoudre des problèmes de régression et de classification. Lors de l’entraînement, l’algorithmecherchera à établir des règles de décision pour séparer les données selon leurs caractéristiques, appelées aussi variables discriminantes. Ces règles de décisions sont ramifiées et peuvent être représentées sous forme d’un arbre de décision à l’aide d’une structure représentée par des nœuds. Les arbres de décision sont l'élément de base de plusieurs modèles comme les forêts aléatoires (Random Forest, RF). L’algorithme RF repose sur un apprentissage combiné de multiples arbres de décision entraînés (Decision Tree, DT) sur différents sous-ensembles de données dont les prédictions sont assemblées. Cette technique consistant à créer plusieurs algorithmes pour les entraîner en parallèle et grouper les prédictions s’appelle le bagging.
 
@@ -121,10 +163,10 @@ Les forêts aléatoires utilisent un ensemble de techniques pour améliorer la r
 
 Pour optimiser les hyperparamètres d'un modèle de forêts aléatoires (randomForest) en R, vous pouvez ajuster plusieurs paramètres clés qui influencent la performance du modèle. Voici les principaux hyperparamètres que vous pourriez considérer :
 
-- ntree: Nombre d'arbres à cultiver. Plus ce nombre est élevé, plus le modèle est stable, mais cela augmente également le temps de calcul.
-- mtry: Nombre de variables à considérer pour chaque division au niveau d'un nœud. Pour les tâches de classification, un bon point de départ est la racine carrée du nombre total de variables.
-- nodesize: Taille minimale des nœuds terminaux. Des valeurs plus petites peuvent conduire à un modèle plus précis mais potentiellement surajusté.
-- maxnodes: Nombre maximum de nœuds terminaux.
+- `ntree`: nombre d'arbres. Plus ce nombre est élevé, plus le modèle est stable, mais cela augmente également le temps de calcul.
+- `mtry`: nombre de variables à considérer pour chaque division au niveau d'un nœud. Pour les tâches de classification, un bon point de départ est la racine carrée du nombre total de variables.
+- `nodesize`: taille minimale des nœuds terminaux. Des valeurs plus petites peuvent conduire à un modèle plus précis mais potentiellement surajusté.
+- `maxnodes`: nombre maximum de nœuds terminaux.
 
 ```{r}
 library(randomForest)
@@ -132,28 +174,40 @@ fit.rf <- randomForest(Outcome ~ ., data = training)
 rf.pred <- predict(fit.rf, newdata = testing)
 confusionMatrix(rf.pred, testing$Outcome)
 ```
-Dans ce script, nous utilisons caret pour automatiser la recherche des meilleurs paramètres mtry, à travers une validation croisée sur 2 plis. Vous pouvez ajuster ces paramètres ou en ajouter d'autres en fonction des spécificités de vos données et de vos objectifs.
+
+Dans ce script, nous utilisons `caret` pour automatiser la recherche des meilleurs paramètres `mtry`, à travers une validation croisée sur 2 plis. Vous pouvez ajuster ces paramètres ou en ajouter d'autres en fonction des spécificités de vos données et de vos objectifs.
 
 La validation croisée est une technique de validation de modèle statistique utilisée pour évaluer la capacité d'un modèle de machine learning à généraliser à un ensemble de données indépendant. Elle est particulièrement utile pour limiter les problèmes de surajustement (overfitting), où le modèle fonctionne bien sur les données d'entraînement mais échoue à prédire de nouvelles données avec précision.
 
-**Fonctionnement de la validation croisée**
+**Fonctionnement de la validation croisée :**
 
-- Division des données : La validation croisée commence par diviser l'ensemble de données complet de manière aléatoire en un nombre prédéterminé de "plis" ou de sous-ensembles. Le nombre le plus couramment utilisé de plis est 10, bien que ce nombre puisse varier en fonction de la taille de l'ensemble de données et des préférences spécifiques pour l'analyse.
+- division des données : la validation croisée commence par diviser l'ensemble de données complet de manière aléatoire en un nombre prédéterminé de "plis" ou de sous-ensembles. Le nombre le plus couramment utilisé de plis est 10, bien que ce nombre puisse varier en fonction de la taille de l'ensemble de données et des préférences spécifiques pour l'analyse.
 
-- Entraînement et évaluation itératifs : Le modèle est ensuite entraîné et validé de manière itérative. À chaque itération, un des plis est retenu comme ensemble de validation pour tester le modèle, et les autres plis sont utilisés comme données d'entraînement. Ce processus est répété de telle sorte que chaque pli est utilisé exactement une fois comme ensemble de validation.
+- entraînement et évaluation itératifs : le modèle est ensuite entraîné et validé de manière itérative. À chaque itération, un des plis est retenu comme ensemble de validation pour tester le modèle, et les autres plis sont utilisés comme données d'entraînement. Ce processus est répété de telle sorte que chaque pli est utilisé exactement une fois comme ensemble de validation.
 
-- Agrégation des résultats : Après avoir passé à travers tous les plis, les performances du modèle sur chaque pli sont généralement moyennées pour obtenir une estimation plus précise de sa performance.
-- Types de validation croisée
-    - Validation croisée k-plis (k-fold cross-validation) : C'est la forme la plus commune de validation croisée où l'ensemble de données est divisé en k sous-ensembles ou plis.
-    - Validation croisée Leave-One-Out (LOO) : Une variante spéciale de la validation croisée où k (le nombre de plis) est égal au nombre total de données. Chaque ensemble de validation contient seulement un échantillon. C'est une méthode utile pour les très petits ensembles de données, mais elle peut être très coûteuse en temps de calcul pour les grands ensembles.
-    -Validation croisée stratifiée : Une variation de la validation croisée k-plis qui est utilisée pour les données de classification. Elle garantit que chaque pli reflète la proportion de chaque classe cible dans les données originales. Cela est particulièrement utile lorsque les classes ne sont pas équilibrées.
-Avantages de la validation croisée
+- agrégation des résultats : après avoir passé à travers tous les plis, les performances du modèle sur chaque pli sont généralement moyennées pour obtenir une estimation plus précise de sa performance.
 
-- Estimation fiable : En utilisant toutes les données disponibles pour l'entraînement et la validation, la validation croisée offre une utilisation efficace des données et une estimation fiable de la performance du modèle.
-- Réduction du surajustement : Comme le modèle doit fonctionner bien sur plusieurs sous-ensembles de données test, le risque de surajustement est réduit.
-- Inconvénients de la validation croisée
-- Coût computationnel : La validation croisée peut être coûteuse en termes de temps de calcul, surtout si le nombre de plis est élevé ou si l'ensemble de données est très grand.
-- Sensibilité aux divisions : Malgré ses avantages, la performance estimée peut encore être sensible à la manière dont les données sont divisées en plis.
+**Types de validation croisée :**
+
+- validation croisée k-plis (k-fold cross-validation) : C'est la forme la plus commune de validation croisée où l'ensemble de données est divisé en k sous-ensembles ou plis.
+
+- validation croisée Leave-One-Out (LOO) : Une variante spéciale de la validation croisée où k (le nombre de plis) est égal au nombre total de données. Chaque ensemble de validation contient seulement un échantillon. C'est une méthode utile pour les très petits ensembles de données, mais elle peut être très coûteuse en temps de calcul pour les grands ensembles.
+
+- validation croisée stratifiée : Une variation de la validation croisée k-plis qui est utilisée pour les données de classification. Elle garantit que chaque pli reflète la proportion de chaque classe cible dans les données originales. Cela est particulièrement utile lorsque les classes ne sont pas équilibrées.
+    
+**Avantages de la validation croisée :**
+
+- estimation fiable : En utilisant toutes les données disponibles pour l'entraînement et la validation, la validation croisée offre une utilisation efficace des données et une estimation fiable de la performance du modèle.
+
+- réduction du surajustement : Comme le modèle doit fonctionner bien sur plusieurs sous-ensembles de données test, le risque de surajustement est réduit.
+
+**Inconvénients de la validation croisée :**
+  
+- coût computationnel : La validation croisée peut être coûteuse en termes de temps de calcul, surtout si le nombre de plis est élevé ou si l'ensemble de données est très grand.
+
+- sensibilité aux divisions : Malgré ses avantages, la performance estimée peut encore être sensible à la manière dont les données sont divisées en plis.
+
+
 En résumé, la validation croisée est une technique robuste pour évaluer la performance des modèles de machine learning, assurant une meilleure généralisation sur des données non vues et offrant une mesure plus objective de la qualité d'un modèle.
 
 
@@ -192,7 +246,7 @@ confusionMatrix(rf.pred, testing$Outcome)
 ```
 
 
-## SVM
+## 3.4 SVM
 
 Le SVM ou séparateur à vaste marge ou machine à vecteur de support ou encore Support Vector Machine sont des algorithmes puissants qui peuvent effectuer des classifications linéaires ou non linéaires et des régressions sur des jeux de données complexe. L’objectif des SVM consiste à projeter les données dans un espace à plusieurs dimensions pour trouver le meilleur hyperplan (classificateur), c’est-à-dire celui qui maximise la marge entre les différentes classes pour les séparer. La marge correspond à la distance entre la frontière de décision et les échantillons les plus proches. Lors du processus d’entraînement, l’algorithme va chercher le meilleur hyperplan pour trouver la marge la plus large entre les échantillons appelés vecteurs de supports les plus proches des différentes classes à séparer. Si les données ne sont pas séparables linéairement, celles-ci seront projetées dans un espace avec plus de dimensions appelé « espace de redescription » grâce à une fonction appelée noyau (concept de kernel trick ou astuce du noyau) pour les rendre séparables linéairement.
 
@@ -207,14 +261,14 @@ svm.pred <- predict(fit.svm, newdata = testing)
 confusionMatrix(svm.pred, testing$Outcome)
 ```
 
-Dans R, vous pouvez utiliser la fonction tune() du package e1071 pour automatiser cette recherche. Voici comment vous pouvez procéder pour tester différents hyperparamètres pour un SVM, tels que le coût (cost) et le gamma (gamma), qui sont critiques pour la performance du modèle SVM.
+Dans R, vous pouvez utiliser la fonction `tune()` du package `e1071` pour automatiser cette recherche. Voici comment vous pouvez procéder pour tester différents hyperparamètres pour un SVM, tels que le coût (`cost`) et le gamma (`gamma`), qui sont critiques pour la performance du modèle SVM.
 
 
-- tune() : Cette fonction du package e1071 permet de faire une recherche sur grille des hyperparamètres spécifiés. Vous fournissez le modèle (svm), la formule et les données d'entraînement, ainsi que la liste des valeurs à tester pour chaque hyperparamètre dans ranges.
+- `tune()` : Cette fonction du package `e1071` permet de faire une recherche sur grille des hyperparamètres spécifiés. Vous fournissez le modèle (svm), la formule et les données d'entraînement, ainsi que la liste des valeurs à tester pour chaque hyperparamètre dans ranges.
 
-- kernel : Vous pouvez choisir parmi plusieurs noyaux tels que "linear", "radial", "polynomial", etc. Pour chaque type de noyau, les hyperparamètres pertinents (comme gamma) peuvent varier.
+- `kernel` : Vous pouvez choisir parmi plusieurs noyaux tels que "linear", "radial", "polynomial", etc. Pour chaque type de noyau, les hyperparamètres pertinents (comme `gamma`) peuvent varier.
 
-- cost et gamma : cost contrôle le compromis entre atteindre une marge maximale et minimiser les erreurs de classification. Un coût plus élevé peut conduire à un modèle plus complexe, ce qui risque de surajuster. gamma définit l'influence d'un seul exemple d'entraînement, avec des valeurs plus basses signifiant 'plus loin' et des valeurs plus élevées signifiant 'plus proche'.
+- `cost` et `gamma` : cost contrôle le compromis entre atteindre une marge maximale et minimiser les erreurs de classification. Un coût plus élevé peut conduire à un modèle plus complexe, ce qui risque de surajuster. gamma définit l'influence d'un seul exemple d'entraînement, avec des valeurs plus basses signifiant 'plus loin' et des valeurs plus élevées signifiant 'plus proche'.
 
 
 ```{r}
@@ -240,6 +294,9 @@ svm.pred <- predict(best.svm, newdata = testing)
 confusionMatrix(svm.pred, testing$Outcome)
 ```
 
+## 3.5 Bonus : percpetrons et réseaux de neurones
+
+Regarder la documentation de la librarie nnet (`?nnet`)
 
 ```{r}
 library(nnet)
@@ -249,5 +306,13 @@ nnet.pred <- predict(fit.nnet, newdata = testing, type = "class")
 nnet.mat <- table(predicted = nnet.pred, actual = testing$Outcome)
 confusionMatrix(factor(nnet.pred), testing$Outcome)
 
+```
+
+### Sources
+
+[rpubs](https://rpubs.com/thanrajks/med-ana)
+
+```{r}
+sessionInfo()
 ```
 
