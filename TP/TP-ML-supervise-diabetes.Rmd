@@ -41,7 +41,7 @@ library(caret)
 
 - Import des données avec un fichier au format `csv`
 ```{r}
-diab <- read_csv("")
+diab <- read_csv("https://raw.githubusercontent.com/agodmer/UE-Medecine-IA-Omics/main/Data/diabetes.csv")
 ```
 
 ## 1. Visualiser les données
