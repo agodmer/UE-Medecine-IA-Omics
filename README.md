@@ -5,18 +5,19 @@
 ## Intervenants 
 
 ## Programme
+| Jour     | Date          | Activités |
+|----------|---------------|---------------------------------------------------|
+| Lundi    | 22 avril 2024 | Visite des laboratoires (A LAMAZIERE / G BACHELOT / A GODMER) |
+| Mardi    | 23 avril 2024 | Statistiques et méthodes non supervisées (G BACHELOT / A GODMER) / Pipelines d'analyses ML et DL (G BACHELOT / A GODMER) |
+| Mercredi | 24 avril 2024 | Initiation à R (G BACHELOT / A GODMER) |
+| Jeudi    | 25 avril 2024 | Initiation à Python (G BACHELOT / A GODMER) |
+| Vendredi | 26 avril 2024 | 9h - 17h : Mini Congrès Recherche clinique et IA - LCA - amphi ASTIER - Présentation des DFGSM3 aux DFGSM2 des deux parcours IA |
+| Lundi    | 29 avril 2024 | Exemples d'analyse ML et jeux de données / Préparation des travaux pratiques (G BACHELOT / A GODMER) |
+| Mardi    | 30 avril 2024 | Travail personnel |
+| Mercredi | 1 mai 2024    | Férié |
+| Jeudi    | 2 mai 2024    | Travail personnel |
+| Vendredi | 3 mai 2024    | 9h - Evaluation : QCM/CROQ et présentation ppt des résultats |
 
-Data | Matin | Après-midi 
- ---: | :---: | :--- 
-22/04/2024| Cellule 1.2 |Visite des laboratoires/ Sciences omiques (G. Bachelot, A. Godmer) / Initation à R (G. Bachelot, A. Godmer) / Statistiques et méthodes non supervisées (G. Bachelot, A. Godmer)
-23/04/2024| Cellule 2.2 | Initiation à Python (G. Bachelot, A. Godmer) / Méthodes supervisées (G. Bachelot, A. Godmer)
-24/04/2024| Cellule 1.2 | Gestion et import des données (G. Bachelot, A. Godmer)
-25/04/2024| Cellule 2.2 | Pipelines d'analyses ML et DL (G. Bachelot, A. Godmer)
-26/04/2024| Mini Congrès Recherche clinique et IA - LCA - amphi ASTIER - Présentation des DFGSM3 aux DFGSM2 des deux parcours IA |
-29/04/2024| Cellule 2.2 | Exemples d'analyse ML et jeux de données / Prépapration des travaux pratiques (G. Bachelot, A. Godmer)
-30/04/2024| Cellule 2.2 | Travail personnel 
-02/05/2024| Cellule 2.2 | Travail personnel
-03/05/2024| Cellule 2.2 | Evaluation : QCM/CROQ et présentation ppt des résultats
 
 ## Cours
 
