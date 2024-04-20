@@ -35,8 +35,8 @@
 
 [Initiation à R](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/Cours_intro_R.pdf)
 
-[TP initation à R](TP/TP-ML-supervise-diabetes.html)
+[TP initation à R](TP/TP_intro_R_versionApprenants.html)
 
 Initiation à Python
 
-[Préparation des travaux pratiques]()
+[Préparation des travaux pratiques](TP/TP-ML-supervise-diabetes.html)
