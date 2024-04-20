@@ -19,6 +19,11 @@
 | Vendredi | 3 mai 2024    | 9h - Evaluation : QCM/CROQ et présentation ppt des résultats |
 
 
+## QCM pré-post formation
+
 ## Cours
 
-[Méthodes non supervisées](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/cours_PCA.pdf)
+[Statiqtiques et Méthodes non supervisées](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/cours_PCA.pdf)
+[Initiation à R]()
+[Initiation à Python]()
+[Préparation des travaux pratiques]()
