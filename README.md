@@ -3,6 +3,11 @@
 ## Présentation de l'UE
 
 ## Intervenants 
+Dr Alexandre Godmer (AHU département de bactériologie, site hôpital Saint-Antoine, Sorbonne-Université, INSERM, U1135, Centre d’Immunologie et des Maladies Infectieuses, Cimi-Paris, Paris).
+
+Dr Guillaume Bachelot
+
+Dr Antonin Lamazière 
 
 ## Programme
 | Jour     | Date          | Activités |
