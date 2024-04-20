@@ -1,0 +1,736 @@
+---
+title: "Tp introduction à R"
+author: "Alexandre Godmer ; Guillaume Bachelot ; Noshine Mohammad"
+date: '`r Sys.Date()`'
+output: html_document
+---
+  
+# 1. Création d'objets
+
+Un objet peut être créé avec l’opérateur « assigner » ou « affecter » qui s’écrit  `<-` :
+
+**notes :**  
+- R différencie les lettres minuscules et les lettres majuscules.
+- quand vous assignez un nom à un objet, l’affichage de cet objet n’est plus automatique, il faut le 
+demander en tapant simplement le nom de l’objet
+
+## 1.1. Scalaires
+
+Pour une création d'objet, plusieurs syntaxes sont possibles :
+
+```{r eval=F}
+x <- 2
+y=3
+x+y -> z
+z
+```
+
+## 1.2. Scalaires chaînes
+Un exemple :
+```{r eval=F}
+x <- "J'aime"
+y <- "la galette"
+paste(x,y)
+```
+
+## 1.3. Vecteurs
+### Création
+Voici les principales méthodes pour construire un vecteur :
+
+* par la fonction collecteur `c()`:
+```{r eval=F}
+x <- c(5.6,-2,78,42.3)
+y <- c(x,3,c(12,8))
+y
+```
+* par **:** pour une séquence arithmétique de raison +1 ou -1:
+```{r eval=F}
+x = 1:6
+x
+```
+* par la fonction **seq** pour une séquence arithmétique plus générale :
+```{r eval=F}
+seq(1,6,by=0.5)
+seq(1,6,length=5)
+```
+* par la fonction de réplication **rep** :
+```{r eval=F}
+rep(1,4)
+rep(c(1,2),each=3)
+```
+
+### Extraction
+
+L'extraction s'effectue à partir des indices des éléments du vecteur que l'on souhaite extraire :
+```{r eval=F}
+x <- 15:25
+x[2]
+x[2:5] 
+x[c(1,3,5,7)] 
+```
+
+
+### Opérations
+Les opérations sur les vecteurs s'effectuent élément par élément :
+
+```{r eval=F}
+x <- 1:5
+y <- 3:7
+x+y
+x*y
+```
+
+On peut aussi appliquer des opérateurs booléens comme ==, !=, >, >=, etc. Par exemple :
+```{r eval=F}
+y <- x>3
+y
+z=x[x<=3]
+z
+```
+
+
+## 1.4. Matrices
+
+### Création
+
+La principale méthode pour créer une matrice est d'utiliser la fonction **matrix** qui prend en arguments les coefficients de la matrice ainsi que son nombre de lignes (ou de colonnes)  :
+
+```{r eval=F}
+m <- matrix(1:6,ncol=2)
+m     
+m <- matrix(1:8,nrow=2)
+m
+```
+Par défaut, R range les valeurs par colonne. Pour ranger par ligne, on utilise l'argument **byrow** :
+
+```{r eval=F}
+m <- matrix(1:8,nrow=2,byrow=T)
+m
+```
+
+### Extraction
+L'emplacement d'un élément dans une matrice est donné par ses indices de ligne et de colonne :
+```{r eval=F}
+m[1,3]
+```
+Il est rare qu'on ait besoin de ne sélectionner qu'un élément d'une matrice. Usuellement, on sélectionne une ou plusieurs lignes et/ou une ou plusieurs colonnes. Exemples :
+
+* Sélection par des entiers positifs :
+```{r eval=F}
+m[2,]
+```
+* Sélection par des entiers négatifs :
+```{r eval=F}
+m[-1,] 
+m[1:2,-1]
+```
+
+### Opérations
+Attention au fait que le produit par * ne donne pas le produit de 2 matrices au sens usuel de l'algèbre linéaire, idem pour l'exponentielle d'une matrice, etc.
+
+```{r eval=F}
+m <- matrix(1:4,ncol=2)
+m
+n <- matrix(3:6,ncol=2,byrow=T)
+n
+m+n
+m*n    
+m%*%n 
+```
+
+Exemples de fonctions classiques en algèbre linéaire :
+```{r eval=F}
+det(m) 
+solve(m) 
+eigen(m)
+```
+
+## 1.5. Listes
+Les listes permettent de regrouper différents objets. Elles permettent, par exemple, de stocker dans un même objet un vecteur et une matrice :
+
+```{r eval=F}
+vec <- c(1,2,3)
+mat <- matrix(1,ncol=2,nrow=3)
+L <- list(vec,mat)
+L
+```
+
+L'objet **L** ainsi créé est une liste de longueur 2. La première composante est le vecteur **vec**, la seconde la matrice **mat**. On extrait les composantes d'une liste à l'aide de doubles crochets :
+```{r eval=F}
+L[[1]]
+```
+
+Il est également possible, et souvent utile, de donner des noms aux différentes composantes d'une liste. Ceci peut se faire grâce à la fonction **names** :
+
+```{r eval=F}
+names(L) <- c("vecteur","matrice")
+L
+```
+Dans ce cas, l'extraction peut toujours se faire via les doubles crochets ou bien à partir des noms des différentes composantes, le symbole **$** séparant le nom de la liste du nom de la composante :
+
+```{r eval=F}
+L$vecteur
+```
+
+De nombreuses fonctions de R renvoient un résultat sous la forme d'une liste, c'est le cas par exemple de la fonction **eigen** vue ci-dessus, dont on liste les éléments via la fonction **ls**. Exemple :
+
+
+```{r eval=F}
+m <- matrix(1:4,ncol=2)
+dec <- eigen(m)
+ls(dec)
+dec$values  
+dec$vectors 
+```
+
+## 1.6. Data-frames (tableaux de données)
+Les data-frames sont les objets typiques pour faire des statistiques sous R. Ce sont des listes particulières dont les composantes sont de même longueur, mais de types éventuellement différents. Les tableaux de données utilisés en statistique, de forme (individus,variables), doivent être mis sous la forme d'un data-frame. En effet, un tableau de données est constitué de variables quantitatives et/ou qualitatives mesurées sur les mêmes individus. Les data-frames permettent de tenir compte de la nature de chaque variable. Considérons un jeu de données de 6 individus et 2 variables :
+```{r eval=F}
+age <- c(17,28,64,8,25,36)
+sexe <- c("H","F","F","H","H","F")
+donnees <- data.frame(age,sexe)
+donnees
+```
+
+L'extraction d'éléments peut se faire :
+
+* comme pour une matrice :
+```{r eval=F}
+donnees[3,1]
+donnees[4,]
+donnees[,2]
+```
+
+* comme pour une liste :
+```{r eval=F}
+donnees[[2]]
+donnees$sexe
+```
+
+La fonction **names** permet de retrouver les noms des variables, ce qui peut être utile lorsque le tableau de données contient beaucoup de variables :
+
+```{r eval=F}
+names(donnees)
+```
+
+# 2. Exercice : Sélection et tri dans un data-frame
+
+Le data-frame **iris** est disponible sous R. Il suffit de taper **data(iris)** pour le charger.  
+1. Obtenir un résumé de ce jeu de données grâce à la fonction **summary**.
+
+```{r, echo=T}
+#iris
+# A vous de jouer
+
+```
+Quelles sont ses dimensions ? 
+
+2. Retrouver les dimensions de ce jeu de données grâce à la fonction **dim**.
+
+```{r, echo=T}
+# A vous de jouer
+```
+
+Les dimensions sont 150 (lignes) 5 (colonnes)
+3. Visualiser ses cinq premières lignes.
+
+```{r, echo=T}
+# A vous de jouer
+
+```
+
+4. Créer un nouveau data-frame, que vous appellerez **iris2**, comportant uniquement les données de la modalité **versicolor** de la variable **Species**.
+
+
+```{r, echo=T}
+# A vous de jouer
+```
+
+5. Trier par ordre croissant les données de **iris2** en fonction de la variable **Petal.Length** (vous pourrez utiliser la fonction **order**). Stocker le résultat dans un data-frame **iris3**. Vérifier le résultat sur les premières lignes de ce nouveau data-frame grâce à la fonction **head**.
+
+```{r, echo=T}
+# A vous de jouer
+
+```
+
+
+# 3. Etude d''un jeu de données
+
+Dans le cadre d'une étude de la population, un hôpital s'est intéressé à la propension à ronfler d'hommes et de femmes. Le fichier **Snore.txt** contient un échantillon de 100 patients, les variables considérées sont :
+
+* age : en années ;
+* poids : en kg ;
+* taille : en cm ;
+* alcool : nombre de verres bus par jour (en équivalent verre de vin rouge) ;
+* sexe : sexe de la personne (F=femme, H=homme) ;
+* ronfle : diagnostic de ronflement (O=ronfle, N=ne ronfle pas) ;
+* tabac : comportement au niveau du tabac (O=fumeur, N=non fumeur).
+
+Le but de cette étude est d'essayer d'expliquer le ronflement (variable **ronfle**) par
+les six autres variables présentées ci-dessus. On dispose de 100 individus pour faire l'analyse.
+
+
+## 3.1 Importation du jeu de données
+La première étape consiste à importer le jeu de données sous R. Pour ce faire, il faut au préalable vérifier que le fichier est enregistré dans le répertoire où R travaille. L'importation s'effectue alors à partir de la fonction `read.table()` :
+```{r eval=T}
+donnees <- read.table("https://raw.githubusercontent.com/agodmer/UE-Medecine-IA-Omics/main/Data/Snore.txt")
+head(donnees)
+```
+
+1. Extraire le premier individu du jeu de données. Que remarquez-vous ?
+
+```{r, echo=T}
+donnees[0:1,]
+
+```
+
+Problème : le premier individu correspond au nom des variables. Ce n’est pas ce qu’on veut.
+On corrige le tir en spécifiant que la première ligne du data-frame correspond au nom des variables.
+
+2. A partir de l'aide de la fonction `read.table()`, résoudre ce problème.
+
+```{r, echo=T}
+donnees <- read.table("https://raw.githubusercontent.com/agodmer/UE-Medecine-IA-Omics/main/Data/Snore.txt",header=T)
+head(donnees)
+```
+3. Analyser les sorties de la commande :
+```{r eval=T}
+summary(donnees)
+```
+
+## 3.2 Indicateurs numériques
+Nous rappelons dans cette partie les commandes permettant d'obtenir des indicateurs statistiques tels que la moyenne, la variance, les quantiles, etc.
+
+### 3.2.1. Calcul d'indicateurs pour une variable
+
+Nous étudions ici la variable **age** du jeu de données.
+```{r eval=T}
+age <- donnees$age
+```
+
+
+1. Retrouver la moyenne, l'écart-type, la médiane et le premier quantile à l'aide des fonctions **mean**, **sd**, **median** et **quantile**. 
+```{r, echo=T}
+moyenne <- mean(age)
+ecart_type <- sd(age)
+premier_quantile <- quantile(age, probs = 0.25)
+
+moyenne
+ecart_type
+premier_quantile
+
+```
+
+
+2. Toujours à l'aide la fonction **quantile**, déterminer les 3 quartiles en une seule commande.
+
+
+```{r, echo=T}
+
+quantile(age,probs=c(0.25,0.5,0.75))
+summary(age)
+
+```
+
+### 3.2.2. Calculs d'indicateurs pour un ensemble de variables
+
+Nous reprenons les indicateurs de la question précédente dans le cas d'un tableau de données constitué uniquement de variables quantitatives. Par exemple :
+```{r eval=T}
+donnees1 <- donnees[,c(1,2,3)]
+head(donnees1)
+```
+
+1. Calculer la moyenne de chacune des trois variables.
+
+```{r, echo=T}
+mean(c(donnees1$age))
+mean(c(donnees1$poids))
+mean(c(donnees1$taille))
+
+donnees1$age <- as.numeric(donnees1$age)
+donnees1$poids <- as.numeric(donnees1$poids)
+donnees1$taille <- as.numeric(donnees1$taille)
+```
+
+
+2. Retrouver le résultat précédent à l'aide de la fonction **apply**.
+
+La fonction **apply** permet d’effectuer la même opération sur un ensemble de variables : le premier argument correspond au jeu de données, le second à la dimension sur laquelle l’opération doit s’appliquer (1 pour ligne, 2 pour colonne), le troisième à la fonction à appliquer :  
+
+
+```{r, echo=T}
+apply(donnees1, 2, mean)
+
+```
+
+3. Calculer l'écart-type de chacune des trois variables.  
+```{r, echo=T}
+apply(donnees1, 2, sd)
+```
+
+4. Calculer le premier quartile de chacune des trois variables.
+```{r, echo=T}
+
+moyenne_donnees <- apply(X = donnees1,MARGIN = 2,FUN = mean)
+moyenne_donnees 
+
+quantile_donnees <- apply(X = donnees1,MARGIN = 2,FUN = quantile, probs = 0.25)
+quantile_donnees
+
+#class(donnees1)
+
+```
+La fonction **quantile** a comme argument **probs**, que l’on précise à la suite de la fonction.  
+
+
+# 4. Exercice
+On cherche à comparer les indicateurs numériques suivant les modalités de la variable à expliquer, à savoir la variable **ronfle**.
+
+1. Créer deux tableaux de données issus du tableau original : un tableau nommé **ronfleur** qui contient uniquement les individus qui ronflent et un autre nommé **nonronfleur** qui contient les individus ne ronflant pas (on pourra utiliser la fonction **split**).
+
+```{r, echo=T}
+# A vous de jouer
+
+```
+
+
+2. Résumer les deux tableaux de données. Comparer ces indicateurs, interpréter.
+
+```{r, echo=T}
+# A vous de jouer
+
+```
+
+3. Quelle est la proportion d'hommes parmi les personnes qui ronflent ? Quelle est la proportion de ronfleurs parmi les hommes ?  
+
+Pour déterminer la proportion d’hommes ronfleurs :
+
+```{r, echo=T}
+# A vous de jouer
+```
+Pour déterminer la proportion de ronfleurs parmi les hommes :   
+
+```{r, echo=T}
+# A vous de jouer
+```
+
+
+# 5. Représentation des données avec ggplot2
+
+## 5.1 Introduction
+
+Le package **ggplot2** est un outil de plus en plus utilisé pour représenter des données. Les graphes proposés par **ggplot2** sont généralement plus élaborés et mieux finalisés que les graphes effectués avec les fonctions classiques de R. Ce package permet également d'obtenir des représentations graphiques par sous-groupes d'individus avec très peu de code. Les légendes sont le plus souvent gérées automatiquement. La syntaxe de **ggplot2** est spécifique et totalement différente de celle des graphiques conventionnels de R. Cette fiche n'en présente qu'une simple introduction.
+
+N'hésitez pas consulter la <a href="https://drive.google.com/open?id=1qMSJbzpNH1F0uxZtkMQ3zKPyp9VYqSHu">cheatsheet</a> ou le site <a href="http://www.cookbook-r.com">cookbook-r</a>.
+
+Il faut bien entendu commencer par installer le package **ggplot2**.
+
+
+## 5.2 Premiers graphes avec **ggplot2**
+
+Il faut bien entendu commencer par installer le package **ggplot2**. On considère le jeu de données **diamonds** qui contient le prix ainsi que certaines caractéristiques de 54000 diamants. Afin d'avoir des représentations graphiques moins lourdes, on se restreint à un sous-échantillon de taille 5000 :
+```{r eval=T}
+library(ggplot2)
+diamants <- diamonds[sample(nrow(diamonds), 5000), ]
+#diamants
+```
+
+L'approche **ggplot2** consiste à séparer les instructions qui vont permettre d'obtenir la représentation graphique souhaitée.
+
+## 5.3 Représentation d'une variable
+
+### 5.3.1 Variable quantitative discrète, variable qualitative
+Les diagrammes en barres peuvent représenter aussi bien des variables qualitatives que quantitatives discrètes. Prenons l'exemple d'un diagramme en barres pour la variable **cut** qui représente la qualité de la coupe du diamant. Afin d'obtenir une telle représentation on doit spécifier :
+
+* le jeu de données : **diamants** ;
+* la variable que l'on souhaite représenter : **cut** ;
+* le type de représentation souhaitée : **diagramme en barres**.
+
+On utilise cette décomposition pour construire le graphe comme suit :
+```{r eval=T}
+ggplot(diamants) + aes(x = cut) + geom_bar()
+```
+
+Le jeu de données est renseigné dans la fonction **ggplot**, la variable à représenter dans la fonction **aes**, le type de représentation souhaitée est spécifié ensuite par la fonction **geom_bar()**. Les 3 instructions sont séparées par un "+". C'est le schéma classique de construction de graphes avec **ggplot2**.
+
+### 5.3.2 Variable quantitative continue
+Nous étudions ici la variable continue **price**.
+
+En utilisant un protocole identique, l'histogramme de la variable continue **price** s'obtient comme suit :
+```{r eval=T}
+ggplot(diamants) + aes(x = price) + geom_histogram()
+```
+
+## 5.4 Représentation de deux variables
+
+Les deux représentations précédentes nécessitent la spécification d'une seule variable : **cut** pour le diagrame en barres et **price** pour l'histogramme. Cependant, de nombreuses représentations font intervenir plus d'une variable. Par exemple, dans le cas d'un nuage de points, deux variables sont à spécifier. Il suffit alors d'indiquer ces deux variables dans la fonction **aes**. Ainsi, si on souhaite représenter le prix d'un diamant en fonction de son nombre de carats, on utilisera :
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price) + geom_point()
+```
+
+## 5.5 La grammaire ggplot
+Comme nous venons de le voir, une représentation graphique **ggplot** se construit à partir d'un ensemble d'éléments indépendants. Ces éléments constituent la grammaire de la syntaxe. Les principaux éléments de la grammaire sont :
+
+* **Data (ggplot)** : le jeu de données qui contient les variables que l'on veut représenter ;
+* **Aesthetics (aes)** : spécification des variables à représenter, on inclut également les couleurs, les tailles des objets à représenter ;
+* **Geometrics (geom_...)** : spécification du type de représentation graphique souhaitée ;
+* **Statistics (stat_...)** : spécification d'éventuelles transformations des données pour la représentation souhaitée ;
+* **Scales (scale_...)** : permet de contrôler le lien entre les données et les aesthetics (modification de couleurs, gestion des axes...).
+
+Nous présentons dans la suite quelques notions élémentaires sur ces différents éléments.
+
+### 5.5.1 Data et aesthetics
+
+Ces deux éléments de la grammaire servent à spécifier le jeu de données et les variables que l'on souhaite représenter. Le jeu de données est un data-frame que l'on renseignera dans le fonction **ggplot**. Les variables seront spécifiées dans la fonction **aes**. Si on souhaite par exemple représenter la variable **price** en fonction de **carat**, on utilisera
+
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price)
+```
+
+La fonction **aes** admet également des arguments tels que **color**, **size**, **fill**. Ces arguments sont à utiliser lorsqu'une couleur ou une taille est définie à partir d'une variable du jeu de données. Si pour la représentation précédente on souhaite une couleur différente selon les modalités de la variable **cut**, on ajoutera **color=cut** dans **aes** :
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price, color = cut)
+```
+
+### 5.5.2 Geometrics
+Les commandes du paragraphe précédent ne renvoient pas de graphes ! Elles servent uniquement à définir les variables du jeu de données que l'on veut représenter. L'élément **geom_...** permet d'ajouter le type de représentation que l'on souhaite. Pour obtenir le nuage de points **carat$\times$price** avec une couleur différente selon **cut**, on exécutera donc
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price, color = cut) + geom_point()
+```
+
+Nous remarquons sur cette figure qu'une légende précisant le code couleur est ajoutée directement. Le tableau ci-dessous donne quelques exemples de fonctions (accompagnés des aesthetics) permettant de faire les représentations graphiques classiques.
+
+Geom   | Description| Aesthetics 
+-------|------------|-----------
+geom_point()| Nuage de points | x, y, shape, fill 
+geom_line()|  Ligne (ordonnée selon x) | x, y, linetype
+geom_abline()|  Droite | slope, intercept 
+geom_path() | Ligne (ordre original) | x, y, linetype 
+geom_text() | Texte | x, y, label, hjust, vjust 
+geom_rect() | Rectangle | xmin, xmax, ymin, ymax, fill, linetype
+geom_polygon() | Polygone | x, y, fill, linetype
+geom_segment() | Segment | x, y, fill, linetype 
+geom_bar() | Diagramme en barres | x, fill, linetype, weight 
+geom_histogram() | Histogramme | x, fill, linetype, weight 
+geom_boxplot() | Boxplots | x, y, fill, weight 
+geom_density() | Densité | x, y, fill, linetype 
+geom_contour() | Lignes de contour | x, y, fill, linetype 
+geom_smooth() | Lissage | x, y, fill, linetype 
+Tous | | color, size, group
+
+Chaque **geom** admet également des arguments particuliers permettant de modifier le graphe (couleur, taille de points, épaisseur de traits, etc.). Si on souhaite par exemple représenter un nuage de points rouges, c'est dans la fonction **geom_point**, non dans la fonction **aes**, qu'il faudra mettre l'argument **color**. De même, pour faire un diagramme en barres bleu, on utilisera **fill="blue"** dans **geom_bar** :
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price) + geom_point(color = "red")
+ggplot(diamants) + aes(x = cut) + geom_bar(fill = "blue")
+```
+
+### 5.5.3 Statistics
+De nombreuses représentations graphiques ne se déduisent pas directement des données, elles nécessitent de transformer des variables ou de calculer des indicateurs à partir des variables. Lorsque la transformation est fonctionnelle, il suffit de spécifier cette transformation dans la fonction **aes**. On représentera par exemple la fonction sinus sur $[-2\pi,2\pi]$ avec
+```{r eval=T}
+D <- data.frame(X = seq(-2 * pi, 2 * pi, by = 0.01))
+ggplot(D) + aes(x = X, y = sin(X)) + geom_line()
+```
+
+On peut aussi utiliser la fonction **qplot** (pour "quick plot") dont la syntaxe ressemble à celle de **plot**. Ainsi, pour le graphe précédent :
+```{r eval=T}
+X = seq(-2 * pi, 2 * pi, by = 0.01)
+qplot(X, sin(X), geom = "line")
+```
+
+D'autres représentations nécessitent des transformations plus complexes que l'application d'une fonction usuelle. C'est par exemple le cas de l'histogramme où il faut calculer le nombre d'individus dans chaque classe pour déduire la hauteur de l'histogramme. Les **statistics** permettent de gérer ces éléments intermédiaires. Ils sont renseignés dans l'argument **stat** des fonctions **geom_**. Pour **geom_histogram**, la valeur par défaut est par exemple **stat=bin**. Cet argument permet de calculer 4 indicateurs :
+
+* **count** : nombre de points dans chaque classe ;
+* **density** : densité pour chaque classe ;
+* **ncount** : équivalent de **count** modifié de manière à ce que la valeur maximale soit de 1 ;
+* **ndensity** : équivalent de **density** modifié de manière à ce que la valeur maximale soit de 1.
+
+La fonction **geom_histogram** permettra ainsi de représenter en ordonnée le premier de ces 4 indicateurs, en l'occurence **count**. Ainsi, la commande
+```{r eval=T}
+ggplot(diamonds) + aes(x = price) + geom_histogram(bins = 40)
+```
+
+renvoie l'histogramme où figure en ordonnées le nombre d'individus par classe, non la densité. Si on souhaite visualiser un autre indicateur sur l'axe des ordonnées, il faudra préciser son nom dans la fonction aes en utilisant le format **..nom..**. Pour représenter l'histogramme de la densité, on utilisera donc
+```{r eval=T}
+ggplot(diamonds) + aes(x = price, y = ..density..) + geom_histogram(bins = 40)
+```
+
+Le package **ggplot2** possède une alternative à la modification des indicateurs via l'argument **stat** dans les fonctions **geom_** : il s'agit des fonctions **stat_**. On pourra par exemple obtenir un lissage via la méthode **loess** en utilisant
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price) + geom_smooth(method = "loess")
+```
+
+ou en utilisant la fonction stat_smooth :
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price) + stat_smooth(method = "loess")
+```
+
+Tout comme les fonctions **geom_** possèdent un argument **stat**, les fonctions **stat_** possèdent un argument **geom**. En modifiant ce argument, on changera la représentation graphique. On a par exemple
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price) + stat_smooth(method = "loess", geom = "point")
+ggplot(diamants) + aes(x = carat, y = price) + stat_smooth(method = "loess", geom = "line")
+```
+
+Le tableau suivant présente quelques exemples de fonctions **stat_**.
+
+
+ Stat   |  Description |  Paramètres 
+--------|------------------|----------------
+stat_identity() | Aucune transformation |  
+stat_bin() | Comptage | binwidth, origin 
+stat_density() | Densité | adjust, kernel 
+stat_smooth() | Lissage | method, se 
+stat_boxplot() | Boxplot | coef 
+
+De nombreuses représentations graphiques pourront être obtenues en utilisant soit les fonctions de type **geom_**, soit les fonctions de type **stat_**. C'est à l'utilisateur de choisir sa syntaxe préférée.
+
+### 5.5.4 Scales
+Les **scales** contiennent tous les paramètres qui permettent de faire le lien entre les données (data) et les aesthetics. Ils définissent ce qui est vu par l'oeil : couleurs, axes, tailles, etc. On les modifie le plus souvent pour affiner le graphe : modifier les palettes de couleur, gérer les axes, les tailles des points... Les fonctions scales sont nommées selon le même schéma :
+
+* elles commencent par **scale_** ;
+* suivi du nom de l'aesthetics que l'on souhaite modifier (**color_**, **fill_**, **x_**,...) ;
+* et se terminent par le nom du scale : manual, identity, ...
+
+On pourra par exemple modifier la couleur des points du graphe vu précédemment avec la commande
+```{r eval=T}
+ggplot(diamants) + aes(x = carat, y = price, color = cut) + geom_point() +
+  scale_color_manual(
+  values = c(
+  "Fair" = "black",
+  "Good" = "yellow",
+  "Very Good" = "blue",
+  "Premium" = "red",
+  "Ideal" = "green"
+  )
+  )
+```
+
+Le tableau suivant présente les principaux types de scales.
+
+
+aes | Discrètes | Continues 
+----|-----------|----------
+Couleur (color et fill) | brewer | gradient 
+  -  | grey | gradient2 
+  -  | hue | gradientn 
+ - | identity | 
+ - | manual |
+Position (x et y) | discrete | continous 
+- | | date 
+Forme | shape | 
+- | identity | 
+- | manual | 
+Taille  | identity | size 
+- | manual | 
+
+
+Voici quelques exemples concrets d'utilisation des scales :
+
+*  Couleurs d'un diagramme en barre : on construit le diagramme en barre de la variable **cut** en utilisant une couleur différente pour chaque barre :
+```{r eval=T}
+p1 <- ggplot(diamants) + aes(x = cut) + geom_bar(aes(fill = cut))
+p1
+```
+
+On change la couleur des barres en utilisant la palette **Purples** :
+```{r eval=T}
+p1 + scale_fill_brewer(palette = "Purples")
+```
+
+*  Dégradé de couleur pour un nuage de points : on s'intéresse au nuage de points **carat$\times$price** avec une échelle de couleur définie par la variable continue **depth** :
+```{r eval=T}
+p2 <- ggplot(diamants) + aes(x = carat, y = price) + geom_point(aes(color = depth))
+p2
+```
+
+On modifie le dégradé de couleur en proposant un nouveau dégradé allant du jaune au rouge à l'aide de scale_color_gradient :
+```{r eval=T}
+p2 + scale_color_gradient(low = "red", high = "yellow")
+```
+
+*  Gestion des axes et de la légende : on peut modifier la graduation de l'axe des abcisses, le nom de l'axe des ordonnées et celui de la variable de la légende du graphe **p2** avec
+```{r eval=T}
+p2 + scale_x_continuous(breaks = seq(0.5, 3, by = 0.5)) + scale_y_continuous(name = "prix") + scale_color_gradient("Profondeur")
+```
+
+
+# 6. Exercice
+
+
+Reprenons le jeu de données **Snore.txt**
+
+```{r, echo=T}
+library(ggplot2)
+donnees <- read.table("https://raw.githubusercontent.com/agodmer/UE-Medecine-IA-Omics/main/Data/Snore.txt")
+colnames(donnees) <- c("age","poids", "taille", "alcool", "sexe", "ronfle", "tabac") 
+donnees <- donnees[-1, ]
+donnees$age <- as.numeric(donnees$age)
+donnees$taille <- as.numeric(donnees$taille)
+donnees$sexe <- as.factor(donnees$sexe)
+donnees$poids <- as.numeric(donnees$poids)
+donnees$alcool <- as.numeric(donnees$alcool)
+head(donnees)
+```
+
+1. Représenter la variable **age** sous forme d'histogramme.
+```{r, echo=T}
+# A vous de jouer
+
+
+```
+
+2. Ajouter un titre au graphique précédent
+
+```{r, echo=T}
+# A vous de jouer
+
+
+```
+
+3. Représenter l'histogramme des densités avec les classes [20;40], ]40;55], ]55,80].
+
+```{r, echo=T}
+require("gridExtra")
+require("cowplot")
+
+# A vous de jouer
+
+```
+
+```{r, echo=T}
+# A vous de jouer
+
+```
+
+4. La représenter à l'aide d'un boxplot. 
+
+```{r, echo=T}
+# A vous de jouer
+```
+
+5. Représenter la variable **sexe** grâce à un diagramme en bar.
+
+```{r, echo=T}
+# A vous de jouer
+```
+
+6. Représenter la variable **alcool** (transformée en variable qualitative via la fonction  **as.factor**). 
+
+```{r, echo=T}
+ls(donnees)
+Alcool <- as.factor(donnees$alcool)
+# A vous de jouer
+```
+
+7. Représenter le poids en fonction de la taille.
+
+```{r, echo=T}
+# A vous de jouer
+```
+
+8. Un boxplot peut être utilisé pour comparer une variable quantitative suivant les modalités d'une variable qualitative. Représenter ainsi les boîtes à moustaches de la variable **age** en fonction de la variable **ronfle**. Conclusion ?
+
+```{r, echo=T}
+# A vous de jouer
+
+```
+
