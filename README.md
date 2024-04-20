@@ -3,11 +3,14 @@
 ## Présentation de l'UE
 
 ## Intervenants 
-Dr Alexandre Godmer (AHU département de bactériologie, site hôpital Saint-Antoine, Sorbonne-Université, INSERM, U1135, Centre d’Immunologie et des Maladies Infectieuses, Cimi-Paris, Paris).
 
-Dr Guillaume Bachelot
+- Dr Guillaume Bachelot
+  
+- Dr Alexandre Godmer (AHU département de bactériologie, site hôpital Saint-Antoine, Sorbonne-Université, INSERM, U1135, Centre d’Immunologie et des Maladies Infectieuses, Cimi-Paris, Paris).
+  
+- Pr Antonin Lamazière
 
-Dr Antonin Lamazière 
+- Pr Renaud Piarroux
 
 ## Programme
 | Jour     | Date          | Activités |
@@ -29,6 +32,11 @@ Dr Antonin Lamazière
 ## Cours
 
 [Statiqtiques et Méthodes non supervisées](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/cours_PCA.pdf)
-[Initiation à R]()
-[Initiation à Python]()
-[Préparation des travaux pratiques]()
+
+[Initiation à R](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/Cours_intro_R.pdf)
+
+[TP initation à R](https://agodmer.github.io/UE-Medecine-IA-Omics/TP/TP_intro_R_versionApprenants.html)
+
+Initiation à Python
+
+[Préparation des travaux pratiques](https://agodmer.github.io/UE-Medecine-IA-Omics/TP/TP-ML-supervise-diabetes.html)
