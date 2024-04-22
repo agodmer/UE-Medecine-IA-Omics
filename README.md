@@ -47,6 +47,8 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 
 ## QCM pré-post formation
 
+- Questionnaire pré-formation : [lien](https://forms.gle/aWgtBWgLjD6on2qy7)
+
 ## Cours
 
 [Statistiques et Méthodes non supervisées](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/cours_PCA.pdf)
