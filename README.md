@@ -25,7 +25,7 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 
 ## Intervenants 
 
-- Dr Guillaume Bachelot
+- Dr Guillaume Bachelot (AHU Biologie de la reproduction - CECOS, site Tenon, Sorbonne-Université)
   
 - Dr Alexandre Godmer (AHU département de bactériologie, site hôpital Saint-Antoine, Sorbonne-Université, INSERM, U1135, Centre d’Immunologie et des Maladies Infectieuses, Cimi-Paris, Paris).
   
@@ -38,8 +38,8 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 |----------|---------------|---------------------------------------------------|
 | Lundi    | 22 avril 2024 | Visite des laboratoires (A LAMAZIERE / G BACHELOT / A GODMER) |
 | Mardi    | 23 avril 2024 | Statistiques et méthodes non supervisées (G BACHELOT / A GODMER) / Pipelines d'analyses ML et DL (G BACHELOT / A GODMER) |
-| Mercredi | 24 avril 2024 | Initiation à R (G BACHELOT / A GODMER) |
-| Jeudi    | 25 avril 2024 | Initiation à Python (G BACHELOT / A GODMER) |
+| Mercredi | 24 avril 2024 | Initiation à R/Python jeu de données entrainement 1/2 (G BACHELOT / A GODMER) |
+| Jeudi    | 25 avril 2024 | Initiation à R/Python jeu de données entrainement 2/2 (G BACHELOT / A GODMER) |
 | Vendredi | 26 avril 2024 | 9h - 17h : Mini Congrès Recherche clinique et IA - LCA - amphi ASTIER - Présentation des DFGSM3 aux DFGSM2 des deux parcours IA |
 | Lundi    | 29 avril 2024 | Exemples d'analyse ML et jeux de données / Préparation des travaux pratiques (G BACHELOT / A GODMER) |
 | Mardi    | 30 avril 2024 | Travail personnel |
