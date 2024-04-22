@@ -10,7 +10,7 @@
 
 L'évolution rapide des technologies numériques, couplée à une augmentation exponentielle du volume de données hétérogènes (Big Data), notamment dans le domaine de la santé, soulève un défi majeur. Il est devenu impératif de préparer les futurs professionnels de santé à maîtriser ces outils et à comprendre leurs enjeux. En effet, les technologies numériques, incluant l'intelligence artificielle (IA), s'apprêtent à révolutionner divers secteurs en médecine. 
 
-[Infromations pratiques :](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/Informations-pratiques.pdf) :
+[Infromations pratiques :](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/Informations-pratiques.pdf)
 - (1) Installation de R 
 → [Download R-4.3.3 for Windows](https://cran.r-project.org/bin/windows/base/)
 
