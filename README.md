@@ -20,7 +20,7 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 - (3) Installation de Anaconda 
 → [Anaconda](https://www.anaconda.com/download)
 
-- (4) lien Discord : https://discord.gg/XvvztZR8
+- (4) lien Discord : [serveur](https://discord.gg/XvvztZR8)
 
 ## Intervenants 
 
