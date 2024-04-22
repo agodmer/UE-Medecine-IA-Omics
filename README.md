@@ -49,12 +49,16 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 
 ## Cours
 
-[Statiqtiques et Méthodes non supervisées](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/cours_PCA.pdf)
+[Statistiques et Méthodes non supervisées](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/cours_PCA.pdf)
+
+[Pipelines de Machine Learning]()
 
 [Initiation à R](https://github.com/agodmer/UE-Medecine-IA-Omics/blob/main/Cours/Cours_intro_R.pdf)
 
 [TP initation à R](https://agodmer.github.io/UE-Medecine-IA-Omics/TP/TP_intro_R_versionApprenants.html)
 
-Initiation à Python
+[Initiation à Python]()
 
 [Préparation des travaux pratiques](https://agodmer.github.io/UE-Medecine-IA-Omics/TP/TP-ML-supervise-diabetes.html)
+
+[Data Challenge](https://agodmer.github.io/UE-Medecine-IA-Omics/Cours/TP_Data_challenge.html)
