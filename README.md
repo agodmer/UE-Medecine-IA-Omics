@@ -18,7 +18,9 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 → [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
 
 - (3) Installation de Anaconda 
-→ [Anaconda](https://www.anaconda.com/download)  
+→ [Anaconda](https://www.anaconda.com/download)
+
+- (4) lien Discord : https://discord.gg/XvvztZR8
 
 ## Intervenants 
 
