@@ -47,11 +47,18 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 | Vendredi | 3 mai 2024    | 9h - Evaluation : QCM/CROQ et présentation ppt des résultats |
 
 
-## QCM pré-post formation
+## Questionnaires d'évaluation
 
 - Questionnaire pré-formation (à remplir **avant** la formation) : [lien](https://forms.gle/aWgtBWgLjD6on2qy7)
 - Questionnaire qualitatif (à remplir **après** la formation) : [lien](https://forms.gle/FyLvviLgb6RqLgv18)
 - Entretien focus group (à remplir **après** la formation) : [lien](https://forms.gle/RyScg61raC7NBJoPA)
+
+## Evaluation de l'UE :
+
+Réalisation d'un data challenge 
+- [Data Challenge](https://agodmer.github.io/UE-Medecine-IA-Omics/Cours/TP_Data_challenge.html)
+
+Présentation de vos résultats sous forme d'un power-point (3 diapos
 
 ## Cours
 
