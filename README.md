@@ -55,10 +55,8 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 
 ## Evaluation de l'UE :
 
-Réalisation d'un data challenge 
-- [Data Challenge](https://agodmer.github.io/UE-Medecine-IA-Omics/Cours/TP_Data_challenge.html)
-
-Présentation de vos résultats sous forme d'un power-point (3 diapos
+ - Réalisation d'un [Data Challenge](https://agodmer.github.io/UE-Medecine-IA-Omics/Cours/TP_Data_challenge.html)
+- Présentation de vos résultats sous forme d'un power-point par groupe de 2 (3 diapos)
 
 ## Cours
 
