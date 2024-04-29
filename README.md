@@ -69,7 +69,7 @@ The file named **RawIntensityMatrixChristner** is a data.frame in .tsv format. T
 The file named **MetadataShigatoxChristnermetadata** is a .csv file associated to the intensity-matrix included 891 rows corresponding to the strains and 4 columns :
 
 - Toxigenic_status: corresponding to the toxigenic status of the strain; according to the study:
-  -norec: triplicate spectra from 190 non-outbreak related Escherichia coli isolates (189 clinical isolates collected during the time of the outbreak, reference strain DH5alpha)
+  - norec: triplicate spectra from 190 non-outbreak related Escherichia coli isolates (189 clinical isolates collected during the time of the outbreak, reference strain DH5alpha)
   - orec: triplicate spectra from 104 outbreak related Escheriachia coli (O104:H4) isolates.
   - ref: triplicate spectra from three biological replicates of outbreak strain reference isolate TY-2482.
 - id_number: corresponding to the number of the strain
