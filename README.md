@@ -56,8 +56,28 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 
 ## Evaluation de l'UE :
 
- - Réalisation d'un [Data Challenge](https://agodmer.github.io/UE-Medecine-IA-Omics/Cours/TP_Data_challenge.html)
+- Réalisation d'un [Data Challenge](https://agodmer.github.io/UE-Medecine-IA-Omics/Cours/TP_Data_challenge.html)
 - Présentation de vos résultats sous forme d'un power-point par groupe de 2 (3 diapos)
+
+## Aide pour le data challenge
+### Description and source
+Intensity matrix from "Rapid MALDI-TOF mass spectrometry strain typing during a large outbreak of Shiga-Toxigenic Escherichia coli, Dryad, Dataset, https://doi.org/10.5061/dryad.bq64j"
+
+### Details
+The file named **RawIntensityMatrixChristner** is a data.frame in .tsv format. The raw mass spectrum from to 891 strains were previously imported into the R environment. After signal processing with the MSclassifR package (using s/n = 2, tolerance = 0.002) and peaks detection (label = id_number), an intensity matrix was performed. This intensity matrix contained 891 rows (corresponding to the strains) and 1226 columns (corresponding to mass-over-charge (m/z)).
+
+The file named **MetadataShigatoxChristnermetadata** is a .csv file associated to the intensity-matrix included 891 rows corresponding to the strains and 4 columns :
+
+- Toxigenic_status: corresponding to the toxigenic status of the strain; according to the study:
+  -norec: triplicate spectra from 190 non-outbreak related Escherichia coli isolates (189 clinical isolates collected during the time of the outbreak, reference strain DH5alpha)
+  - orec: triplicate spectra from 104 outbreak related Escheriachia coli (O104:H4) isolates.
+  - ref: triplicate spectra from three biological replicates of outbreak strain reference isolate TY-2482.
+- id_number: corresponding to the number of the strain
+- Strain_number: corresponding to the name of the strain in the study
+- spot: corresponding to the plate spot for MALDI-TOF MS analysis
+- type_of_extraction: type of extraction for MALDI-TOF MS analysis (only formic acid extraction was used (fae))
+
+Pour le data challenge il faut donc essayer de prédire l'appartenance d'un spectre de masse aux différente catégories (orec, norec et ref). La colone "Toxigenic_status" du fichier **MetadataShigatoxChristnermetadata** correspond donc à Y (target) et X correspond a la matrice d'intensité (fichier **RawIntensityMatrixChristner**), chaque ligne correspond à un spectre de masse.
 
 ## Cours
 
