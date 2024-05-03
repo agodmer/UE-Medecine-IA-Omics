@@ -50,7 +50,7 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 
 ## Questionnaires d'évaluation
 
-- Questionnaire pré-formation (à remplir **avant** la formation) : [lien](https://forms.gle/aWgtBWgLjD6on2qy7)
+- Questionnaire post-formation (à remplir **après** la formation : [lien](https://forms.gle/fQUmijqFW1TwyFycA)
 - Questionnaire qualitatif (à remplir **après** la formation) : [lien](https://forms.gle/FyLvviLgb6RqLgv18)
 - Entretien focus group (à remplir **après** la formation) : [lien](https://forms.gle/RyScg61raC7NBJoPA)
 
