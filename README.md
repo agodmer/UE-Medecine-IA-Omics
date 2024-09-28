@@ -48,11 +48,7 @@ L'évolution rapide des technologies numériques, couplée à une augmentation e
 | Vendredi | 3 mai 2024    | 9h - Evaluation : QCM/CROQ et présentation ppt des résultats |
 
 
-## Questionnaires d'évaluation
-
-- Questionnaire post-formation (à remplir **après** la formation) : [lien](https://forms.gle/fQUmijqFW1TwyFycA)
-- Questionnaire qualitatif (à remplir **après** la formation) : [lien](https://forms.gle/FyLvviLgb6RqLgv18)
-- Entretien focus group (à remplir **après** la formation) : [lien](https://forms.gle/RyScg61raC7NBJoPA)
+## Questionnaires d'évaluation : à remplir avant et à la fin de la formation
 
 ## Evaluation de l'UE :
 
